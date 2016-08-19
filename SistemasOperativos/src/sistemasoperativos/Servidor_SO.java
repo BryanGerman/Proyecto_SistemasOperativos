@@ -1,6 +1,6 @@
 
 package servidorcliente;
-
+//clase que ejecuta la conexion del servidor con el cliente
 public class Servidor_SO {
 
   
