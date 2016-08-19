@@ -1,51 +1,118 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package sistemasoperativos;
+
+package servidorcliente;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author jake_
+ * @author Brysn
  */
-import java.io.*;
-import java.net.*;
-import java.util.logging.*;
 public class ServidorHilo extends Thread {
-    private Socket socket;
-    private DataOutputStream dos;
-    private DataInputStream dis;
-    private int idSessio;
-    public ServidorHilo(Socket socket, int id) {
-        this.socket = socket;
-        this.idSessio = id;
-        try {
-            dos = new DataOutputStream(socket.getOutputStream());
-            dis = new DataInputStream(socket.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(ServidorHilo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    Socket cliente;
+
+    public ServidorHilo(Socket cliente) {
+        this.cliente = cliente;
     }
-    public void desconnectar() {
-        try {
-            socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ServidorHilo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
     @Override
     public void run() {
-        String accion = "";
+        String palabra = "";
         try {
-            accion = dis.readUTF();
-            if(accion.equals("hola")){
-                System.out.println("El cliente con idSesion "+this.idSessio+" saluda");
-                dos.writeUTF("adios");
+            while (true) {
+                OutputStream aux = cliente.getOutputStream();
+                DataOutputStream flujo = new DataOutputStream(aux);
+                flujo.writeUTF("\nEscriba una palabra para ser buscada:\n");
+                InputStream aux2 = cliente.getInputStream();
+                DataInputStream flujo2 = new DataInputStream(aux2);
+                palabra = flujo2.readUTF();
+                flujo.writeUTF(buscarpalabra(palabra));
+
+                System.out.println(palabra);
             }
         } catch (IOException ex) {
             Logger.getLogger(ServidorHilo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ServidorHilo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        desconnectar();
+
+    }
+
+    public String buscarpalabra(String text) throws Exception {
+        FileReader ingreso = null;
+        String palabra = "", error = "";
+        ArrayList<String> palabras = new ArrayList();
+        ArrayList<String> aux = new ArrayList();
+        error = "palabra: " + text + " no encontrada";
+        try {
+            String cadena = "";
+            ingreso = new FileReader("entrada.txt");
+            BufferedReader br = new BufferedReader(ingreso);
+            while ((cadena = br.readLine()) != null) {
+                cadena = cadena.replaceAll(",", "");
+                cadena = cadena.replaceAll("-", "");
+                cadena = cadena.replaceAll("\\.", "");
+                cadena = cadena.replaceAll("\"", "");
+                cadena = cadena.replaceAll("\'", "");
+                cadena = cadena.replaceAll("\\?", "");
+                cadena = cadena.replaceAll("¿", "");
+                cadena = cadena.replaceAll(";", "");
+                cadena = cadena.replaceAll("\\*", "");
+                cadena = cadena.replaceAll("_", "");
+                cadena = cadena.replaceAll("$", "");
+                cadena = cadena.replaceAll("/", "");
+                cadena = cadena.replaceAll(";", "");
+                cadena = cadena.replaceAll("\\(", "");
+                cadena = cadena.replaceAll("\\)", "");
+                cadena = cadena.replaceAll("﻿", "");
+                cadena = cadena.replaceAll("!", "");
+                cadena = cadena.replaceAll("¡", "");
+                cadena = cadena.replaceAll(":", "");
+                StringTokenizer st = new StringTokenizer(cadena, " ");
+                //if(st.nextToken().compareTo(text)==0){
+                while (st.hasMoreTokens()) {
+                    aux.add(st.nextToken());
+                }
+                //palabra=linea;
+                //}
+            }
+
+            String aux2 = text;
+            Set<String> buscador = new HashSet<>(aux);
+            for (String busqueda : buscador) {
+                if (busqueda.indexOf(aux2) == 0) {
+                    palabras.add(busqueda + " : " + Collections.frequency(aux, busqueda));
+                }
+            }
+            if (palabras.isEmpty()) {
+                palabra = "no encontrada";
+            } else {
+                Collections.sort(palabras);
+                for (String busqueda : palabras) {
+                     palabra += busqueda + "\n";
+                }
+            }
+             br.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            JOptionPane.showMessageDialog(null, "error");
+        }
+        return palabra;
     }
 }
+
