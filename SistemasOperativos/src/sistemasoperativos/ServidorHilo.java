@@ -99,7 +99,7 @@ public class ServidorHilo extends Thread {
             Set<String> buscador = new HashSet<>(aux);
             for (String busqueda : buscador) {
                 if (busqueda.indexOf(aux2) == 0) {
-                    palabras.add(busqueda + " : " + Collections.frequency(aux, busqueda));
+                    palabras.add("\nPalabra: "+busqueda + "\nNumero de repeticiones: " + Collections.frequency(aux, busqueda));
                 }
             }
             if (palabras.isEmpty()) {
