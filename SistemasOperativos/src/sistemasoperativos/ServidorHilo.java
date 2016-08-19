@@ -25,16 +25,19 @@ import javax.swing.JOptionPane;
 public class ServidorHilo extends Thread {
 
     Socket cliente;
-
+//clase servidor, en la cual se implementa el algoritmo de busqueda y conteo de palabras en un archivo de texto
     public ServidorHilo(Socket cliente) {
         this.cliente = cliente;
     }
 
     @Override
+    //metodo run que se ejecuta automaticamente al crear un hilo que realiza la asignacion de un nuevo cliente simultaneamente al servidor
     public void run() {
+        
         String palabra = "";
         try {
             while (true) {
+                
                 OutputStream aux = cliente.getOutputStream();
                 DataOutputStream flujo = new DataOutputStream(aux);
                 flujo.writeUTF("\nEscriba una palabra para ser buscada:\n");
@@ -52,7 +55,7 @@ public class ServidorHilo extends Thread {
         }
 
     }
-
+//metodo que busca la palabra o palabras que empiezan con una determinada letra y cuenta cuantas veces se repite 
     public String buscarpalabra(String text) throws Exception {
         FileReader ingreso = null;
         String palabra = "", error = "";
@@ -91,7 +94,7 @@ public class ServidorHilo extends Thread {
                 //palabra=linea;
                 //}
             }
-
+//Utilizacion de las clases ArrayList y HashSet para la implementacion del servidor
             String aux2 = text;
             Set<String> buscador = new HashSet<>(aux);
             for (String busqueda : buscador) {
@@ -100,7 +103,7 @@ public class ServidorHilo extends Thread {
                 }
             }
             if (palabras.isEmpty()) {
-                palabra = "no encontrada";
+                palabra = "palabra no encontrada";
             } else {
                 Collections.sort(palabras);
                 for (String busqueda : palabras) {
