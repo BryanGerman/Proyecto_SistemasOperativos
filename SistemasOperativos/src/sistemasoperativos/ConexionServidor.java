@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public  class ConexionServidor {
-
+//clase que se utiliza para la conexion del servidor, el cual realiza la conexion con el cliente 
     static final int PUERTO = 9000;
     String palabra = "";
     Socket skCliente;
@@ -26,7 +26,7 @@ public  class ConexionServidor {
         try {
              ServerSocket skServidor = new ServerSocket(PUERTO);
             while (true) {
-               
+             //metodo accept que valida la conexion con el cliente  
                 Socket skCliente = skServidor.accept();
                 System.out.println("Cliente conectado");
                 ServidorHilo hilo = new ServidorHilo(skCliente);
