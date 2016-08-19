@@ -7,10 +7,11 @@ El proyecto fue desarrollado en el lenguaje de programacion Java utilizando sock
 
 La carpeta sistemas operativos contiene los diferentes aportes y actualizaciones que han sido ejecutados en la realización del codigo, el mismo que ha sido mejorado hasta cumplir con los requerimientos del proyecto.
 
-Para la ejecucion del proyecto se debe ejecutar la clase Servidor_SO y Cliente_SO respectivamente en ese orden en un IDE como Eclipse o Netbeans. tambien se pueden ejecutar multiples clientes, ejecutando la clase Cliente_SO las veces que sea necesario luego de que se haya empezado a ejecutar la clase Servidor_SO.
+Para la ejecucion del proyecto se debe ejecutar la clase Servidor_SO y Cliente_SO respectivamente en ese orden en un IDE como Eclipse o Netbeans.
+Es posible ejecutar varios clientes, ejecutando la clase Cliente_SO las veces que sea necesario luego de que se haya empezado a ejecutar la clase Servidor_SO.
 
 
 
 
-
+Integrantes:
 Bryan Lema, José Limaico, Andrés Salazar.
