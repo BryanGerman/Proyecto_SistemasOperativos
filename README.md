@@ -1,6 +1,6 @@
 # Proyecto_SistemasOperativos
 
-El siguiente proyecto implementa un buscador y contador de palabras a partir de un texto en formato txt utilizando un Servidor y varios Clientes que pueden acceder al mismo para realizar varias peticiones de busqueda y conteo de palabras que se encuetran repetidas en el texto.
+El proyecto propuesto tiene como objetivo implementar un buscador y un contador de palabras a partir de un texto en formato txt  mediante el uso de un Servidor y varios Clientes que pueden acceder al mismo con la intención de solicitar la disponibilidad de palabras dentro del texto evaluado, y posteriormente el servidor devuelve un conteo de palabras que coincidan con la palabra en cuestión.
 
 El codigo fuente del proyecto se encuentra anexado en dos ramas conjuntas a la ramificación master, el cual ha sido desarrollado en el lenguaje de programacion Java utilizando sockets para la conexión de los clientes con el servidor.
 
