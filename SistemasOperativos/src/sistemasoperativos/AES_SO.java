@@ -9,7 +9,7 @@ package sistemasoperativos;
  *
  * @author jake_
  */
-
+//clase utilizada para encriptar los mensajes que llegan al tanto al servidor como al cliente
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
